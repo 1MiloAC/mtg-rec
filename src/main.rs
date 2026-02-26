@@ -1,5 +1,6 @@
 pub mod embedding;
+pub mod generate;
 
 fn main() {
-    println!("Hello, world!");
+    let v = vec!["test", "test"];
 }
