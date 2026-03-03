@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-arrow-array = "58.0.0"
-arrow-schema = "58.0.0"
 lancedb = "0.26.2"
+arrow-array = "57.3.0"
+arrow-schema = "57.3.0"
 sbert = "0.4.1"
 tch = {version = "0.13.0", features = ["download-libtorch"]}

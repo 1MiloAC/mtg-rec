@@ -1,6 +1,8 @@
-use arrow_array::{RecordBatch, RecordBatchIterator};
+use arrow_array::{
+    FixedSizeListArray, Int32Array, RecordBatch, RecordBatchIterator, types::Float32Type,
+};
 use arrow_schema::{DataType, Field, Schema};
-use sbert::{Embeddings, Error, SBertHF};
+use sbert::Embeddings;
 use std::sync::Arc;
 
 pub async fn data(embeds: Vec<Embeddings>) {
@@ -13,4 +15,28 @@ pub async fn data(embeds: Vec<Embeddings>) {
             true,
         ),
     ]));
+    let batches = RecordBatchIterator::new(
+        vec![
+            RecordBatch::try_new(
+                schema.clone(),
+                vec![
+                    Arc::new(Int32Array::from_iter_values(0..256)),
+                    Arc::new(
+                        FixedSizeListArray::from_iter_primitive::<Float32Type, _, _>(
+                            (0..256).map(|_| Some(vec![Some(1.0); 128])),
+                            128,
+                        ),
+                    ),
+                ],
+            )
+            .unwrap(),
+        ]
+        .into_iter()
+        .map(Ok),
+        schema.clone(),
+    );
+    db.create_table("my_table", Box::new(batches))
+        .execute()
+        .await
+        .unwrap();
 }
