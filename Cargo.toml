@@ -7,5 +7,6 @@ edition = "2024"
 lancedb = "0.26.2"
 arrow-array = "57.3.0"
 arrow-schema = "57.3.0"
-sbert = "0.4.1"
 tch = {version = "0.13.0", features = ["download-libtorch"]}
+fastembed = "5.11.0"
+onnxruntime = "0.0.14"
