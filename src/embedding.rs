@@ -1,12 +1,9 @@
-use sbert::{Embeddings, Error, SBertHF};
-use std::env;
-use std::path::PathBuf;
+use fastembed::{Embedding, EmbeddingModel, Error, InitOptions, TextEmbedding};
+use std::{env, path::PathBuf};
 
-pub fn embed(s: &[String]) -> Result<Vec<Embeddings>, Error> {
-    let mut home: PathBuf = env::current_dir().unwrap();
-    home.push("../model/nomic/model.onnx");
-
-    let sbert_model = SBertHF::new(home.to_str().unwrap());
-    let batch_size = 64;
-    sbert_model?.forward(s, batch_size)
+pub fn embd(data: &[String]) -> Result<Vec<Embedding>, Error> {
+    let mut model = TextEmbedding::try_new(
+        InitOptions::new(EmbeddingModel::NomicEmbedTextV15).with_show_download_progress(true),
+    )?;
+    model.embed(data, None)
 }

@@ -1,8 +1,15 @@
+pub mod db;
 pub mod embedding;
 pub mod generate;
+use anyhow::Result;
+use tokio::task;
 
-fn main() {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let v = vec!["test", "test2"];
     let vs: Vec<String> = v.iter().map(|s| s.to_string()).collect();
-    let _ = embedding::embed(&vs);
+    println!("sucess");
+    let embeds = embedding::embd(&vs);
+    db::data(embeds.unwrap()).await;
+    Ok(())
 }
