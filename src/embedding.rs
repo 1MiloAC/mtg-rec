@@ -4,5 +4,11 @@ pub fn embd(data: &[String]) -> Result<Vec<Embedding>, Error> {
     let mut model = TextEmbedding::try_new(
         InitOptions::new(EmbeddingModel::NomicEmbedTextV15).with_show_download_progress(true),
     )?;
-    model.embed(data, None)
+
+    let embeddings = model.embed(data, None).map(|v| {
+        println!("Embeddings length: {}", v.len());
+        v
+    });
+
+    embeddings
 }
