@@ -1,6 +1,7 @@
 pub mod db;
 pub mod embedding;
 pub mod generate;
+pub mod parse;
 use anyhow::Result;
 use tokio;
 

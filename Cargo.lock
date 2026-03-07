@@ -3974,6 +3974,8 @@ dependencies = [
  "fastembed",
  "lancedb",
  "ort",
+ "serde",
+ "serde_json",
  "tch",
  "tokio",
 ]
